@@ -1,18 +1,15 @@
 {
-    "name": "YT Transcript Viewers",
+    "name": "YT Transcript Viewer",
     "version": "1.0.0",
-    "description": "Get transcription of a youtube video.",
+    "description": "Get transcription of youtube videos.",
     "manifest_version": 3,
     "author": "B45i",
     "permissions": ["tabs"],
     "action": {
-        "default_title": "YT Transcript",
+        "default_title": "YT Transcript Viewer",
         "default_popup": "popup.html"
     },
 
-    "background": {
-        "service_worker": "service-worker.js"
-    },
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*", "<all_urls>"],
