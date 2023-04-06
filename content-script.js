@@ -11,7 +11,7 @@ const extractTranscript = response => {
     return transcript;
 };
 
-const getTranscript = async (videoId, key) => {
+const fetchTranscript = async (videoId, key) => {
     key = key || 'AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8';
     if (!videoId) {
         throw Error('Video Id is not provided');
@@ -54,12 +54,17 @@ const getVideoId = url => {
     }
 };
 
-const url = window.location.href;
-const videoId = getVideoId(url);
-getTranscript(videoId).then(transcript => {
-    console.log('result', transcript);
-});
+const getTranscript = async sendResponse => {
+    const url = window.location.href;
+    const videoId = getVideoId(url);
 
-// getTranscript('AV2umY3R0vw').then(transcript => {
-//     console.log(transcript);
-// });
+    const transcript = await fetchTranscript(videoId);
+    sendResponse({ transcript });
+};
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.type === 'getTranscript') {
+        getTranscript(sendResponse);
+        return true;
+    }
+});
